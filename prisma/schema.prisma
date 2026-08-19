@@ -1,0 +1,229 @@
+// Prisma schema — Doctor Booking System
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
+}
+
+enum RescheduleStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum BookingMethod {
+  ONLINE
+  ADMIN_BOOKED
+  CALL_REQUEST
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String?
+  email         String?  @unique
+  phone         String   @unique
+  passwordHash  String?
+  role          Role     @default(USER)
+  whatsappOptIn Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  appointments       Appointment[]
+  rescheduleRequests RescheduleRequest[]
+  whatsappMessages   WhatsAppMessage[]
+  createdDoctors     Doctor[]
+
+  @@index([phone])
+  @@index([email])
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  target    String
+  codeHash  String
+  type      String   @default("LOGIN")
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([target, type])
+}
+
+model Doctor {
+  id              String   @id @default(cuid())
+  name            String
+  specialization  String
+  description     String?
+  imageUrl        String?
+  consultationFee Float
+  advanceDiscount Float    @default(0)
+  experience      Int?
+  rating          Float?
+  city            String?
+  isActive        Boolean  @default(true)
+  createdById     String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  createdBy    User                 @relation(fields: [createdById], references: [id])
+  availability DoctorAvailability[]
+  timeSlots    TimeSlot[]
+  appointments Appointment[]
+
+  @@index([specialization])
+  @@index([city])
+  @@index([isActive])
+}
+
+model DoctorAvailability {
+  id           String  @id @default(cuid())
+  doctorId     String
+  dayOfWeek    Int
+  startTime    String
+  endTime      String
+  slotDuration Int     @default(30)
+  isAvailable  Boolean @default(true)
+
+  doctor Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@index([doctorId])
+}
+
+model TimeSlot {
+  id        String   @id @default(cuid())
+  doctorId  String
+  date      DateTime @db.Date
+  startTime String
+  endTime   String
+  isBooked  Boolean  @default(false)
+
+  doctor Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  appointment       Appointment?       @relation("SlotAppointment")
+  rescheduleRequest RescheduleRequest? @relation("SlotReschedule")
+
+  @@unique([doctorId, date, startTime])
+  @@index([doctorId, date])
+}
+
+model Appointment {
+  id              String            @id @default(cuid())
+  userId          String
+  doctorId        String
+  slotId          String?           @unique
+  appointmentDate DateTime          @db.Date
+  startTime       String
+  endTime         String
+  status          AppointmentStatus @default(PENDING)
+  paymentStatus   PaymentStatus     @default(PENDING)
+  paymentAmount   Float?
+  paymentId       String?
+  bookingMethod   BookingMethod     @default(ONLINE)
+  patientName     String?
+  patientPhone    String?
+  notes           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  user              User                @relation(fields: [userId], references: [id])
+  doctor            Doctor              @relation(fields: [doctorId], references: [id])
+  slot              TimeSlot?           @relation("SlotAppointment", fields: [slotId], references: [id])
+  rescheduleRequest RescheduleRequest?
+  payment           Payment?
+
+  @@index([userId])
+  @@index([doctorId, appointmentDate])
+  @@index([status])
+  @@index([appointmentDate])
+}
+
+model RescheduleRequest {
+  id              String           @id @default(cuid())
+  appointmentId   String           @unique
+  userId          String
+  requestedSlotId String? @unique
+
+  requestedSlot TimeSlot? @relation("SlotReschedule", fields: [requestedSlotId], references: [id])
+
+  reason     String?
+  status     RescheduleStatus @default(PENDING)
+  adminNotes String?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id])
+
+  @@index([status])
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  appointmentId String        @unique
+  amount        Float
+  paymentMethod String?
+  transactionId String?
+  orderId       String?
+  status        PaymentStatus @default(PENDING)
+  createdAt     DateTime      @default(now())
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+}
+
+model WhatsAppMessage {
+  id          String   @id @default(cuid())
+  userId      String?
+  phoneNumber String
+  messageBody String
+  status      String   @default("PENDING")
+  sentAt      DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([phoneNumber])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  adminId    String?
+  action     String
+  entityType String
+  entityId   String?
+  details    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType])
+  @@index([adminId])
+  @@index([createdAt])
+}
+
+model Setting {
+  key   String @id
+  value Json?
+}

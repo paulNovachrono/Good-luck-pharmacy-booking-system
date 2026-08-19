@@ -1,0 +1,138 @@
+▲ Next.js 16.2.12 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.29.49:3001
+- Environments: .env.local, .env
+✓ Ready in 1416ms
+
+○ Compiling / ...
+(node:13608) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /login 200 in 5.7s (next.js: 4.4s, application-code: 1271ms)
+ GET / 200 in 8.0s (next.js: 5.2s, application-code: 2.8s)
+ GET /doctors 200 in 8.1s (next.js: 5.4s, application-code: 2.7s)
+ GET / 200 in 8.2s (next.js: 4.9s, application-code: 3.4s)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="inter_fe8b...">
+                          <body
+                            className="min-h-full flex flex-col font-sans"
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+ GET / 200 in 1887ms (next.js: 15ms, application-code: 1872ms)
+ GET / 200 in 692ms (next.js: 9ms, application-code: 683ms)
+ GET /account 200 in 2.8s (next.js: 550ms, proxy.ts: 7ms, application-code: 2.3s)
+ POST /api/auth/logout 200 in 463ms (next.js: 425ms, application-code: 38ms)
+ GET /login 200 in 52ms (next.js: 9ms, application-code: 43ms)
+ GET /login 200 in 95ms (next.js: 16ms, application-code: 80ms)
+[MOCK-OTP] +919999999999 : 631225
+ POST /api/auth/send-otp 200 in 1486ms (next.js: 721ms, application-code: 765ms)
+ POST /api/auth/verify-otp 200 in 1037ms (next.js: 265ms, application-code: 772ms)
+ GET /account 200 in 881ms (next.js: 16ms, proxy.ts: 16ms, application-code: 849ms)
+ GET /account 200 in 2.3s (next.js: 58ms, proxy.ts: 15ms, application-code: 2.3s)
+ GET /account 200 in 1268ms (next.js: 7ms, proxy.ts: 9ms, application-code: 1251ms)
+ GET / 200 in 324ms (next.js: 6ms, application-code: 317ms)
+[MOCK-OTP] +919999999999: 994160
+ POST /api/auth/send-otp 200 in 2.1s (next.js: 5ms, application-code: 2.0s)
+ POST /api/auth/verify-otp 200 in 787ms (next.js: 5ms, application-code: 782ms)
+ GET /admin 200 in 6.3s (next.js: 3.0s, proxy.ts: 11ms, application-code: 3.3s)
+ GET /admin/appointments 200 in 1030ms (next.js: 635ms, proxy.ts: 32ms, application-code: 363ms)
+ GET /admin/doctors 200 in 1032ms (next.js: 669ms, proxy.ts: 7ms, application-code: 356ms)
+ GET /admin/settings 200 in 939ms (next.js: 591ms, proxy.ts: 8ms, application-code: 339ms)
+✓ Compiled in 234ms
+ GET / 200 in 688ms (next.js: 263ms, application-code: 424ms)
+ GET / 200 in 547ms (next.js: 163ms, application-code: 383ms)
+ GET / 200 in 1914ms (next.js: 16ms, application-code: 1898ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="inter_fe8b...">
+                          <body
+                            className="min-h-full flex flex-col font-sans"
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+ 
+ GET / 200 in 334ms (next.js: 9ms, application-code: 325ms)
+ GET / 200 in 4.1s (next.js: 11ms, application-code: 4.1s)
+ GET /login 200 in 224ms (next.js: 167ms, application-code: 57ms)
+[MOCK-OTP] +919999999999: 106678
+ POST /api/auth/send-otp 200 in 2.1s (next.js: 88ms, application-code: 2.1s)
+ POST /api/auth/verify-otp 200 in 849ms (next.js: 55ms, application-code: 795ms)
+ GET /admin 200 in 2.1s (next.js: 51ms, proxy.ts: 8ms, application-code: 2.1s)
+ GET /admin 200 in 2.2s (next.js: 10ms, proxy.ts: 9ms, application-code: 2.1s)
+ GET /admin/appointments 200 in 66ms (next.js: 30ms, proxy.ts: 7ms, application-code: 30ms)
+ GET /api/admin/doctors 200 in 626ms (next.js: 363ms, application-code: 264ms)
+ GET /api/admin/appointments?page=1&limit=25 200 in 880ms (next.js: 293ms, application-code: 586ms)
+ GET /api/admin/doctors 200 in 269ms (next.js: 5ms, application-code: 264ms)
+ GET /api/admin/appointments?page=1&limit=25 200 in 524ms (next.js: 5ms, application-code: 520ms)
+ GET /admin/doctors 200 in 62ms (next.js: 27ms, proxy.ts: 7ms, application-code: 28ms)
+ GET /api/admin/doctors 200 in 273ms (next.js: 8ms, application-code: 264ms)
+ GET /api/admin/doctors 200 in 282ms (next.js: 5ms, application-code: 277ms)
+ GET /admin/patients 200 in 2.1s (next.js: 2.1s, proxy.ts: 7ms, application-code: 27ms)
+ GET /admin/reschedules 200 in 646ms (next.js: 577ms, proxy.ts: 8ms, application-code: 61ms)
+ GET /admin/reschedules 200 in 77ms (next.js: 11ms, proxy.ts: 29ms, application-code: 36ms)
+ GET /admin/reschedules 200 in 46ms (next.js: 7ms, proxy.ts: 9ms, application-code: 30ms)
+ GET /api/admin/reschedules 200 in 988ms (next.js: 215ms, application-code: 773ms)
+ GET /api/admin/reschedules 200 in 779ms (next.js: 5ms, application-code: 774ms)
