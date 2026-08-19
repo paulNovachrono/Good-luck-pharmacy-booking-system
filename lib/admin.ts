@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { isAdminRole, type SessionPayload } from "@/lib/session";
-import type { Prisma } from "@/app/generated/prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export async function requireAdmin(): Promise<SessionPayload | null> {
   const session = await getSession();

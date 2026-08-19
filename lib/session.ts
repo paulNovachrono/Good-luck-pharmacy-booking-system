@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
-import type { Role } from "@/app/generated/prisma/client";
+import type { Role } from "@prisma/client";
 
 export const SESSION_COOKIE = "glp_session";
 export const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7;
